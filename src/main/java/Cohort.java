@@ -35,7 +35,21 @@ public class Cohort {
     }
 
     public Student getRandomStudent(){
-        Collections.shuffle(students);
-        return students.get(0);
+        List<Student> randomStudents = this.students;
+        Collections.shuffle(randomStudents);
+        return randomStudents.get(0);
+    }
+
+    public List<Student> getRandomPair(){
+        List<Student> randomPair = new ArrayList<Student>();
+        Student studentOne = getRandomStudent();
+        randomPair.add(studentOne);
+        Student studentTwo = getRandomStudent();
+        if (studentTwo != studentOne) {
+            randomPair.add(studentTwo);
+            return randomPair;
+        } else {
+            return getRandomPair();
+        }
     }
 }
