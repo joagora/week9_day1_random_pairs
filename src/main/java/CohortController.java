@@ -1,6 +1,7 @@
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class CohortController {
 
         VelocityTemplateEngine velocityTemplateEngine = new VelocityTemplateEngine();
         Cohort cohort = new Cohort();
-        List<Student> students = cohort.getRandomPair();
+        ArrayList<ArrayList> allPairs = cohort.getAllPairs();
 
 
         get("/random_student", (req, res) -> {
@@ -21,11 +22,17 @@ public class CohortController {
             return new ModelAndView(model, "random_student.vtl");
         }, velocityTemplateEngine);
 
-        get("/random", (req, res) -> {
+        get("/random_pair", (req, res) -> {
             List<Student> randomPair = cohort.getRandomPair();
             HashMap<String, Object> model = new HashMap<>();
             model.put("randomPair", randomPair);
             return new ModelAndView(model, "random_pair.vtl");
+        }, velocityTemplateEngine);
+
+        get("/all_pairs", (req, res) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("allPairs", allPairs);
+            return new ModelAndView(model, "all_pairs.vtl");
         }, velocityTemplateEngine);
     }
 }

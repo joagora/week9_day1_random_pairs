@@ -1,0 +1,9 @@
+
+
+#foreach($pair in $allPairs)
+    <h1>
+        #foreach($student in $pair)
+            $student.getName()
+        #end
+    </h1>
+#end

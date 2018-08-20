@@ -1,3 +1,5 @@
+import org.apache.velocity.util.ArrayListWrapper;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,21 +37,26 @@ public class Cohort {
     }
 
     public Student getRandomStudent(){
-        List<Student> randomStudents = this.students;
-        Collections.shuffle(randomStudents);
-        return randomStudents.get(0);
+        Collections.shuffle(this.students);
+        return this.students.remove(0);
     }
 
-    public List<Student> getRandomPair(){
-        List<Student> randomPair = new ArrayList<Student>();
-        Student studentOne = getRandomStudent();
-        randomPair.add(studentOne);
-        Student studentTwo = getRandomStudent();
-        if (studentTwo != studentOne) {
-            randomPair.add(studentTwo);
-            return randomPair;
-        } else {
-            return getRandomPair();
+    public ArrayList<Student> getRandomPair(){
+        ArrayList<Student> randomPair = new ArrayList<Student>();
+        for (int i = 0; i < 2; i++){
+            randomPair.add(getRandomStudent());
         }
+        return randomPair;
+    }
+
+    public ArrayList<ArrayList> getAllPairs(){
+        ArrayList<ArrayList> allPairs = new ArrayList<>();
+        int counter = students.size();
+        while(students.size() >= 2){
+            ArrayList<Student> pair = getRandomPair();
+            allPairs.add(pair);
+            counter -= 1;
+        }
+        return allPairs;
     }
 }
